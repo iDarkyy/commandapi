@@ -1,0 +1,4 @@
+main: me.idarkyy.commandapi.test.TestPlugin
+
+name: CmdApiTest
+version: 1.0
