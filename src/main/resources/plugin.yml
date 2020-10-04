@@ -1,4 +1,5 @@
-main: me.idarkyy.commandapi.test.TestPlugin
-
-name: CmdApiTest
-version: 1.0
+main: me.idarkyy.commandapi.plugin.CommandApiPlugin
+name: commandapi
+version: 1.0-SNAPSHOT
+author: iDarkyy
+description: A simple command api
