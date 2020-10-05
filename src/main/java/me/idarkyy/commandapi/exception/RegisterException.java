@@ -1,5 +1,8 @@
 package me.idarkyy.commandapi.exception;
 
+/**
+ * Thrown when an error occurs while registering the command
+ */
 public class RegisterException extends RuntimeException {
     public RegisterException(String name) {
         super(name);

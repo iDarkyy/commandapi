@@ -12,6 +12,10 @@ import java.lang.reflect.Field;
 public class CommandMapUtils {
     private static CommandMap commandMap;
 
+    /**
+     * Get the command map
+     * @return instance of the bukkit command map
+     */
     public static @NotNull CommandMap getCommandMap() {
         if (commandMap != null) {
             return commandMap;
@@ -26,6 +30,6 @@ public class CommandMapUtils {
         } catch (NoSuchFieldException | IllegalAccessException ignored) {
         }
 
-        return null;
+        return null; // should never happen
     }
 }

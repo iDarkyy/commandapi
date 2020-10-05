@@ -1,5 +1,8 @@
 package me.idarkyy.commandapi.exception;
 
+/**
+ * Thrown when an error occurs while executing a sub-command
+ */
 public class SubcommandException extends RuntimeException {
     public SubcommandException(String name) {
         super(name);

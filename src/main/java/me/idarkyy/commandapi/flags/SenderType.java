@@ -8,8 +8,19 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public enum SenderType {
+    /**
+     * ConsoleCommandSender
+     */
     CONSOLE("Console"),
+
+    /**
+     * Player
+     */
     PLAYER("Player"),
+
+    /**
+     * Any of the both
+     */
     BOTH("");
 
     private @NotNull String name;
@@ -27,6 +38,12 @@ public enum SenderType {
         return name;
     }
 
+    /**
+     * Check if the sender is an instance of
+     *  the SenderType
+     * @param sender the sender
+     * @return true if the sender is an instance of the enum
+     */
     public boolean check(CommandSender sender) {
         Objects.requireNonNull(sender, "sender");
 
