@@ -1,5 +1,6 @@
 package me.idarkyy.commandapi;
 
+import me.idarkyy.commandapi.annotations.Permission;
 import me.idarkyy.commandapi.annotations.Subcommand;
 import me.idarkyy.commandapi.event.SubcommandEvent;
 import org.bukkit.command.CommandSender;
@@ -11,6 +12,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public abstract class ExternalSubcommand extends BaseSubcommand {
+
     private final HashMap<String, InternalSubcommand> subcommands;
 
     public ExternalSubcommand() {
@@ -22,6 +24,13 @@ public abstract class ExternalSubcommand extends BaseSubcommand {
         if (args.length > 0 && subcommands.containsKey(args[0].toLowerCase())) {
             subcommands.get(args[0].toLowerCase()).trigger(sender, subcommand, Arrays.copyOfRange(args, 1, args.length));
         } else {
+
+            if (permission != null && !permission.isEmpty() && !sender.hasPermission(permission)) {
+                sender.sendMessage(permissionMessage != null
+                        ? permissionMessage
+                        : CommandBuilder.DEFAULT_PERMISSION_MESSAGE);
+            }
+
             execute(sender, subcommand, args);
         }
     }
@@ -40,8 +49,16 @@ public abstract class ExternalSubcommand extends BaseSubcommand {
         HashMap<String, InternalSubcommand> subcommands = new HashMap<>();
 
         for (Method method : methods) {
-            for(String s : method.getAnnotation(Subcommand.class).value().toLowerCase().split("\\|")) {
-                subcommands.put(s, new InternalSubcommand(this, method));
+            for (String s : method.getAnnotation(Subcommand.class).value().toLowerCase().split("\\|")) {
+                InternalSubcommand sc = new InternalSubcommand(this, method);
+
+                sc.setPermission(method.isAnnotationPresent(Permission.class)
+                        ? method.getAnnotation(Permission.class).value()
+                        : null);
+
+                sc.setPermissionMessage(this.permissionMessage);
+
+                subcommands.put(s, sc);
             }
         }
 

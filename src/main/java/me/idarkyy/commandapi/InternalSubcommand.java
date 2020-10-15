@@ -32,6 +32,12 @@ public class InternalSubcommand extends BaseSubcommand {
             return;
         }
 
+        if (permission != null && !permission.isEmpty() && !sender.hasPermission(permission)) {
+            sender.sendMessage(permissionMessage != null
+                    ? permissionMessage
+                    : CommandBuilder.DEFAULT_PERMISSION_MESSAGE);
+        }
+
         try {
             method.invoke(object, new SubcommandEvent(subcommand, sender, args));
         } catch (InvocationTargetException e) {
